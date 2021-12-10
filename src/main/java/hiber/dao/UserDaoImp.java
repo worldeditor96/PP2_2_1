@@ -7,6 +7,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 
 import javax.persistence.TypedQuery;
@@ -34,18 +35,11 @@ public class UserDaoImp implements UserDao {
    @Override
    public User getUserCarByModelSeries(String model, int series) {
 
-      try (Session session = Util.getSessionFactory().openSession()) {
-
-
          String HQL = "from User user where user.car.model = ?1 and user.car.series = ?2";
-
          TypedQuery<User> query = sessionFactory.getCurrentSession().createQuery(HQL);
          query.setParameter(1, model);
          query.setParameter(2, series);
-
          return query.getSingleResult();
-      }
-
    }
 }
 
